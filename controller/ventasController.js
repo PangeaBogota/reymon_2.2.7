@@ -790,12 +790,12 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			CRUD.Updatedynamic(query)
 			CRUD.Updatedynamic("delete from t_pedidos_detalle where rowid_item='"+item.rowid_item+"' and rowid_pedido='"+$scope.Pedido.rowid+"'");
 			$scope.ItemsPedidoAgregados();
+			$scope.CalcularCantidadValorTotal();
 		}
 	})
 
 	}
 	$scope.adicionarItem=function(){
-		debugger
 		$scope.ResultadoValidacion=$scope.validacionColoresCompletos();
 		if ($scope.ResultadoValidacion!='') {
 			Mensajes($scope.ResultadoValidacion,'error','');
@@ -1341,12 +1341,13 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 				function(elem){
 					$scope.ListaPuntoEnvios.push(elem);
 					$scope.PuntoEnvio=elem;
+					ProcesadoHiden();
 				});
 				$scope.ItemsPedidoAgregados();
 				
 			})
 			$('.creado').attr('disabled','disabled');
-			ProcesadoHiden();
+			
 		});
 	}
 	$scope.CantidadTotalPedido=0;
@@ -1378,6 +1379,9 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			}
 			///
 			CRUD.selectAllinOne('select*from   t_pedidos_detalle where rowid_pedido="'+$scope.Pedido.rowid+'"',function(Detalles){
+				if (Detalles.length==0) {
+					$scope.CantidadTotalPedido=0;
+				}
 				$scope.Detalles=Detalles;
 				var IDTallas='(';	
 				for (var i = 0; i < $scope.Detalles.length; i++) {
