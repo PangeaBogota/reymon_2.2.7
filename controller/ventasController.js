@@ -1102,6 +1102,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			}
 		}
 	}
+	
 	$scope.fechaDefault='';
 	$scope.FechaEntrega=function()
 	{
@@ -1286,6 +1287,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			CRUD.select('select*from t_pedidos order by rowid desc LIMIT 1',function(pedido){
 				$scope.Pedido=pedido;
 				$scope.confimar.salir=true;
+				MODAL_SINCRONIZACION=1;
 				ProcesadoHiden();
 				$location.path('/ventas/pedido_nuevo/Pedido='+pedido.rowid)
 			})
@@ -1568,7 +1570,15 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		window.location.href = '#/ventas/pedidos_ingresados';
 	}
 	setTimeout(function() {
-		$('#AlertaSin').click();
+		if (MODAL_SINCRONIZACION==0) {
+			$('#AlertaSin').click();	
+		}
+		else
+		{
+			MODAL_SINCRONIZACION=0;
+		}
+
+		
 	}, 1000);
 	var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     var diasSemana = new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");		

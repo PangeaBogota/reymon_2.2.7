@@ -78,7 +78,7 @@
                 <div class="modal-body">
                     <div id="testmodal" style="padding: 0px;">
                         <form id="antoform" class="form-horizontal calender form-label-left" role="form">
-                            <div class="" ng-show="pedidoSeleccionado.sincronizado=='false' && pedidoSeleccionado.validacionPedido"><button class="btn btn-success confirmarEnvio" ng-click="build()">Listo Para Sincronizar</button></div>
+                            <div class="" ng-show="pedidoSeleccionado.sincronizado=='false' && pedidoSeleccionado.validacionPedido"><button class="btn btn-success confirmarEnvio" ng-click="ConfirmacionFechaentrega()">Listo Para Sincronizar</button></div>
                             <div class="row " style="margin: 0px">
                                 <div class="form-group col-md-4 col-xs-12" style="margin: 1px">
                                     Fecha Solicitud: <strong>{{pedidoSeleccionado.fecha_solicitud}}</strong>
@@ -257,6 +257,44 @@
                 </div>
             </div>
         </div>
-        
         <div id="ColoresAgregados" data-toggle="modal" data-target="#Modalcolores"></div>
+        <div id="fecha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog" style="padding-bottom:100px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="">Por Favor Confirmar Fecha de Entrega!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="testmodal" style="padding: 0px;">
+                            <form id="antoform" class="form-horizontal calender form-label-left" role="form">
+                                <div class="row" style="margin: 0px">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class=" col-md-12 col-xs-12">
+                                                <label  class="control-label">Fecha Entrega de El Pedido es : </label>
+                                                <input value="{{pedidoSeleccionado.fecha_entrega}}" type="date"  readonly="readonly" class="form-control" ></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class=" col-md-12 col-xs-12">
+                                                <label  class="control-label">Confirmacion de Fecha de Entrega<span class="required">*</span></label>
+                                                <input ng-model="FechaEntrega" ng-change="onChangeFechaEntrega()" type="date" id="FechaEntrega" class="form-control" ></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-success " id="modalBalanceColores" style="margin:0px" ng-click="PedidoConfirmado()" >Confirmar</button>
+                    <button type="button" class="btn btn-danger antoclose" id="modalBalanceColores" style="margin:0px"  data-dismiss="modal">Salir</button>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="confirmacionFechaentrega" data-toggle="modal" data-target="#fecha"></div>
 </div>

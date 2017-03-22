@@ -10,10 +10,10 @@ app_angular.controller("PedidosController",['Conexion','$scope','$route',functio
 	$scope.cargarLista=function()
 	{
 		$scope.pedidos=[];
-		CRUD.select('select distinct pedidos.sincronizado,pedidos.valor_impuesto,pedidos.fecha_solicitud,pedidos.sincronizado, pedidos.rowid as rowidpedido,terceros.razonsocial,sucursal.nombre_sucursal,punto_envio.nombre_punto_envio,pedidos.valor_total,detalle.rowid_pedido,count(detalle.rowid_pedido) cantidaddetalles,sum(detalle.cantidad) as cantidadproductos,pedidos.numpedido_erp,pedidos.estado_erp from  t_pedidos pedidos inner join erp_terceros_sucursales sucursal on sucursal.rowid=pedidos.rowid_cliente_facturacion  inner join erp_terceros terceros on terceros.rowid=sucursal.rowid_tercero  left  join t_pedidos_detalle detalle on detalle.rowid_pedido=pedidos.rowid left join erp_terceros_punto_envio punto_envio on punto_envio.rowid=pedidos.id_punto_envio where pedidos.sincronizado!="EnvioCorrecto" and  pedidos.ambiente="'+$scope.sessiondate.codigo_empresa+'" and  pedidos.usuariocreacion="'+$scope.sessiondate.nombre_usuario+'" group by  pedidos.fecha_solicitud,detalle.rowid_pedido,pedidos.rowid,terceros.razonsocial,sucursal.nombre_sucursal,punto_envio.nombre_punto_envio,pedidos.valor_total order by pedidos.rowid desc    LIMIT 50',
+		CRUD.select('select distinct pedidos.sincronizado,pedidos.valor_impuesto,pedidos.fecha_solicitud,pedidos.sincronizado,pedidos.fecha_entrega, pedidos.rowid as rowidpedido,terceros.razonsocial,sucursal.nombre_sucursal,punto_envio.nombre_punto_envio,pedidos.valor_total,detalle.rowid_pedido,count(detalle.rowid_pedido) cantidaddetalles,sum(detalle.cantidad) as cantidadproductos,pedidos.numpedido_erp,pedidos.estado_erp from  t_pedidos pedidos inner join erp_terceros_sucursales sucursal on sucursal.rowid=pedidos.rowid_cliente_facturacion  inner join erp_terceros terceros on terceros.rowid=sucursal.rowid_tercero  left  join t_pedidos_detalle detalle on detalle.rowid_pedido=pedidos.rowid left join erp_terceros_punto_envio punto_envio on punto_envio.rowid=pedidos.id_punto_envio where pedidos.sincronizado!="EnvioCorrecto" and  pedidos.ambiente="'+$scope.sessiondate.codigo_empresa+'" and  pedidos.usuariocreacion="'+$scope.sessiondate.nombre_usuario+'" group by  pedidos.fecha_solicitud,detalle.rowid_pedido,pedidos.rowid,terceros.razonsocial,sucursal.nombre_sucursal,punto_envio.nombre_punto_envio,pedidos.valor_total order by pedidos.rowid desc    LIMIT 50',
 			function(elem) {elem.tablamobile=1;$scope.pedidos.push(elem)});
 		window.setTimeout(function() {
-			CRUD.select('select distinct pedidos.sincronizado,pedidos.valor_impuesto,pedidos.fecha_solicitud,pedidos.sincronizado, pedidos.rowid as rowidpedido,terceros.razonsocial,sucursal.nombre_sucursal,punto_envio.nombre_punto_envio,pedidos.valor_total,detalle.rowid_pedido,count(detalle.rowid_pedido) cantidaddetalles,sum(detalle.cantidad) as cantidadproductos,pedidos.numpedido_erp,pedidos.estado_erp from  t_pedidos_web pedidos inner join erp_terceros_sucursales sucursal on sucursal.rowid=pedidos.rowid_cliente_facturacion  inner join erp_terceros terceros on terceros.rowid=sucursal.rowid_tercero  left  join t_pedidos_detalle_web detalle on detalle.rowid_pedido=pedidos.rowid left join erp_terceros_punto_envio punto_envio on punto_envio.rowid=pedidos.id_punto_envio where pedidos.usuariocreacion="'+$scope.sessiondate.nombre_usuario+'"  group by  pedidos.fecha_solicitud,detalle.rowid_pedido,pedidos.rowid,terceros.razonsocial,sucursal.nombre_sucursal,punto_envio.nombre_punto_envio,pedidos.valor_total order by pedidos.rowid desc    LIMIT 50',
+			CRUD.select('select distinct pedidos.sincronizado,pedidos.valor_impuesto,pedidos.fecha_solicitud,pedidos.sincronizado,pedidos.fecha_entrega, pedidos.rowid as rowidpedido,terceros.razonsocial,sucursal.nombre_sucursal,punto_envio.nombre_punto_envio,pedidos.valor_total,detalle.rowid_pedido,count(detalle.rowid_pedido) cantidaddetalles,sum(detalle.cantidad) as cantidadproductos,pedidos.numpedido_erp,pedidos.estado_erp from  t_pedidos_web pedidos inner join erp_terceros_sucursales sucursal on sucursal.rowid=pedidos.rowid_cliente_facturacion  inner join erp_terceros terceros on terceros.rowid=sucursal.rowid_tercero  left  join t_pedidos_detalle_web detalle on detalle.rowid_pedido=pedidos.rowid left join erp_terceros_punto_envio punto_envio on punto_envio.rowid=pedidos.id_punto_envio where pedidos.usuariocreacion="'+$scope.sessiondate.nombre_usuario+'"  group by  pedidos.fecha_solicitud,detalle.rowid_pedido,pedidos.rowid,terceros.razonsocial,sucursal.nombre_sucursal,punto_envio.nombre_punto_envio,pedidos.valor_total order by pedidos.rowid desc    LIMIT 50',
 			function(elem) {elem.tablamobile=0;$scope.pedidos.push(elem)});
 		},2000);	
 	}
@@ -24,6 +24,110 @@ app_angular.controller("PedidosController",['Conexion','$scope','$route',functio
 			$scope.validacion=true;
 		}
 	})
+	$scope.fechaDefault='';
+	$scope.FechaEntregaP=function()
+	{
+		var hoy = new Date();
+		var count=0;
+		while (count<3) {
+		  hoy.setTime(hoy.getTime()+24*60*60*1000); // añadimos 1 día
+		  if ( hoy.getDay() != 0)
+		  {
+			var d = new Date(hoy),
+	        month = '' + (d.getMonth() + 1),
+	        day = '' + d.getDate(),
+	        year = d.getFullYear();
+		    if (month.length < 2) month = '0' + month;
+		    if (day.length < 2) day = '0' + day;
+	    	var diaSeleccionado= [year, month, day].join('-');
+			for (var  i= 0; i < DiasFestivos.length; i++) {
+				if (diaSeleccionado==DiasFestivos[i]) {
+					hoy.setDate(hoy.getDate() + 1);
+				}
+			}
+		  	count++;  
+		  }
+		}
+		$scope.fechaDefault=hoy;
+		//document.getElementById("FechaEntrega").valueAsDate = hoy;
+		//$scope.FechaEntrega=	hoy;
+	}
+	$scope.PedidoConfirmado=function()
+	{
+		if ($scope.FechaEntrega=='' || $scope.FechaEntrega==undefined) 
+		{
+			Mensajes('Por favor seleccionar fecha de entrega','error','');
+			return;
+		}
+		var hoy = new Date($scope.FechaEntrega);
+		month = '' + (hoy.getMonth() + 1),
+        day = '' + hoy.getDate(),
+        year = hoy.getFullYear();
+
+	    if (month.length < 2) month = '0' + month;
+	    if (day.length < 2) day = '0' + day;
+
+		var dia1=  [year, month, day].join('-');
+		CRUD.Updatedynamic("update t_pedidos set fecha_entrega='"+dia1+"' where rowid='"+$scope.pedidoSeleccionado.rowidpedido+"'")
+		$scope.FechaEntrega='';
+		document.getElementById("FechaEntrega").valueAsDate = null;
+		$scope.build();	
+		
+
+	}
+
+	$scope.FechaEntregaP();
+	$scope.onChangeFechaEntrega=function()
+	{
+		
+		var hoy = new Date($scope.FechaEntrega);
+		month = '' + (hoy.getMonth() + 1),
+        day = '' + hoy.getDate(),
+        year = hoy.getFullYear();
+
+	    if (month.length < 2) month = '0' + month;
+	    if (day.length < 2) day = '0' + day;
+
+		var dia1=  [year, month, day].join('');
+		
+		month = '' + ($scope.fechaDefault.getMonth() + 1),
+        day = '' + $scope.fechaDefault.getDate(),
+        year = $scope.fechaDefault.getFullYear();
+		
+	    if (month.length < 2) month = '0' + month;
+	    if (day.length < 2) day = '0' + day;
+	    var dia2=[year, month, day].join('');;
+		debugger
+		if (dia2>dia1) {
+			Mensajes('Dias minimos de entrega son 3 Dias','error','');
+			$scope.FechaEntrega='';
+			document.getElementById("FechaEntrega").valueAsDate = null;
+			return;
+		}
+		var i=hoy.getDay()
+		var d = new Date(hoy),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+	    if (month.length < 2) month = '0' + month;
+	    if (day.length < 2) day = '0' + day;
+
+    	var diaSeleccionado= [year, month, day].join('-');
+		for (var i =0;i<DiasFestivos.length;i++) {
+			if (diaSeleccionado==DiasFestivos[i]) {
+				Mensajes('No se puede seleccionar un dia festivo','error','');
+				$scope.FechaEntrega='';
+				document.getElementById("FechaEntrega").valueAsDate = null;
+				return;
+			}
+		}
+	}
+	$scope.ConfirmacionFechaentrega=function()
+	{
+		$('#modalClose').click();
+		$('#confirmacionFechaentrega').click();
+	}
 	$scope.ConsultarDatos=function(pedido){
 		$scope.detallespedido=[];
 		$scope.pedidoSeleccionado=pedido;
