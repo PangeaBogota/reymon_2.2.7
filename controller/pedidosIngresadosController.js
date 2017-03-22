@@ -71,9 +71,8 @@ app_angular.controller("PedidosController",['Conexion','$scope','$route',functio
 		CRUD.Updatedynamic("update t_pedidos set fecha_entrega='"+dia1+"' where rowid='"+$scope.pedidoSeleccionado.rowidpedido+"'")
 		$scope.FechaEntrega='';
 		document.getElementById("FechaEntrega").valueAsDate = null;
+		$('#closeconfirmacion').click();
 		$scope.build();	
-		
-
 	}
 
 	$scope.FechaEntregaP();
