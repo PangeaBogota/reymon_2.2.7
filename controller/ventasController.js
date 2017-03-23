@@ -1622,6 +1622,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
             CRUD.Updatedynamic("delete from erp_item_extencion2_detalle");
             CRUD.Updatedynamic("delete from erp_items_extenciones");
             CRUD.Updatedynamic("delete from t_pedidos_detalle_web");
+            CRUD.Updatedynamic("delete from t_pedidos_detalle_detalle_web");
             CRUD.Updatedynamic("delete from t_pedidos_web");
             
             //
