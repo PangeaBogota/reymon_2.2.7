@@ -1249,7 +1249,12 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
         if (month.length < 2) month = '0' + month;
 	    if (day.length < 2) day = '0' + day;
         var hoy= [year, month, day].join('-');
-		$scope.ValidacionEncabezadoGuardar();
+		var v=$scope.ValidacionEncabezadoGuardar();
+		if (v!='') 
+		{
+			Mensajes(v,'error','')
+			return
+		}
 		ProcesadoShow();
 		$scope.Pedido=[];
 		$scope.Pedido.modulo_creacion='MOBILE';
@@ -1295,28 +1300,26 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 	}
 	$scope.ValidacionEncabezadoGuardar=function(a)
 	{
+		var a='';
 		if ($scope.Tercero.rowid==undefined) {
-			Mensajes('Seleccionar Tercero','error','');
-			return
+			return 'Seleccionar Tercero'
 		}
 		if ($scope.Sucursal.rowid==undefined) {
-			Mensajes('Seleccionar Sucursal','error','');
-			return
+			return 'Seleccionar Sucursal';
 		}
 		if ($scope.PuntoEnvio.rowid==undefined) {
-			Mensajes('Seleccionar Punto Envio','error','');
-			return
+			return 'Seleccionar Punto';
 		}
 		if ($scope.FechaEntrega==undefined || $scope.FechaEntrega=='') {
-			Mensajes('Seleccionar Fecha Entrega','error','');
-			return
+			return 'Seleccionar Fecha';
 		}
+		return a;
 	}
 	$scope.rowid_Pedido=$routeParams.personId;
 	//CARGAR PEDIDO SI EL PARAMETRO DE LA URL TRAE UN ID
 	if ($scope.rowid_Pedido!=undefined) {
 		ProcesadoShow();
-		
+		debugger
 		$scope.rowid_Pedido=$scope.rowid_Pedido.split('=')[1];
 		$scope.acciones.tituloPagina='Pedido # '+$scope.rowid_Pedido;
 		CRUD.select('select*from t_pedidos where rowid='+$scope.rowid_Pedido+' ',function(pedido){
@@ -1514,6 +1517,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		}
 		else if (accion=='guardar') {
 			$scope.confimar.salir=false;
+			debugger
 			if ($scope.Pedido.rowid>0) 
 			{
 				$scope.FinalizarPedido();
