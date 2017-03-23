@@ -98,11 +98,11 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.ListaItems=[];
 		$scope.Consulta="";
 		if ($scope.Sucursal.centro_operacion=='001') {
-			$scope.Consulta="select  *,'' as empaque,'' as observacion from vw_items_precios  where  erp_id_maestro='"+$scope.Sucursal.id_lista_precios+"' and (tipo_inventario = 'IN300501')  order by item_referencia1 ";
+			$scope.Consulta="select distinct  *,'' as empaque,'' as observacion from vw_items_precios  where  erp_id_maestro='"+$scope.Sucursal.id_lista_precios+"' and (tipo_inventario = 'IN300501')  order by item_referencia1 ";
 		}
 		else if ($scope.Sucursal.centro_operacion=='003') 
 		{
-			$scope.Consulta="select*from vw_items_precios  where  erp_id_maestro='"+$scope.Sucursal.id_lista_precios+"'  and    (tipo_inventario = 'IN300502'  or  tipo_inventario = 'IN300503')   order by item_referencia1 ";
+			$scope.Consulta="select distinct *,'' as empaque,'' as observacion from vw_items_precios  where  erp_id_maestro='"+$scope.Sucursal.id_lista_precios+"'  and    (tipo_inventario = 'IN300502'  or  tipo_inventario = 'IN300503')   order by item_referencia1 ";
 		}
 		CRUD.select($scope.Consulta,
 			function(elem)
