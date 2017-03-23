@@ -22,7 +22,7 @@
                                         <input  placeholder="Seleccionar Tercero" type="text" ng-model="Search" class="form-control col-md-7 col-xs-12 creado"  ng-change="onChangeFiltroTercero()"  ></input>
                                         <select  
                                             ng-model="Tercero"  id="Tercero" ng-options="partner as partner.razonsocial 
-                                            for partner in ListaTerceros | filter:{ cliente : Search }" class="form-control  sucursal creado" ng-change="onChangeTercero()" >
+                                            for partner in ListaTerceros | filter:Search" class="form-control  sucursal creado" ng-change="onChangeTercero()" >
                                         </select>
                                     </div>
                                 </div>

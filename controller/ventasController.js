@@ -1102,7 +1102,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 			}
 		}
 	}
-	
+
 	$scope.fechaDefault='';
 	$scope.FechaEntrega=function()
 	{
@@ -1392,6 +1392,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 				IDTallas=IDTallas.substring(0,IDTallas.length-1);
 				IDTallas+=')';
 				CRUD.selectAllinOne('select color.*,talla.rowid_item, talla.item_ext1 from t_pedidos_detalle_detalle color  inner join t_pedidos_detalle talla on color.pedidodetalle=talla.rowid  where pedidodetalle in  '+IDTallas+' ',function(Colores){
+
 					$scope.Colores=Colores;
 					for (var i = 0; i < $scope.ItemsPedido.length; i++) {
 						$scope.ItemsPedido[i].iva=$scope.ItemsPedido[i].precio*$scope.ItemsPedido[i].impuesto_porcentaje/100;
