@@ -1322,9 +1322,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		CRUD.select('select*from t_pedidos where rowid='+$scope.rowid_Pedido+' ',function(pedido){
 			$scope.Pedido=pedido;
 			$scope.OrdenCompra=$scope.Pedido.orden_compra;
-
 			var d = new Date($scope.Pedido.fecha_entrega.replace('-','/'));
-			debugger
 			document.getElementById("FechaEntrega").valueAsDate = d;
 			$scope.FechaEntrega=d;
 			CRUD.select("select  codigo_sucursal||'-'||nombre_sucursal as sucursal,*from erp_terceros_sucursales where rowid = '"+$scope.Pedido.rowid_cliente_facturacion+"'   order by codigo_sucursal",
