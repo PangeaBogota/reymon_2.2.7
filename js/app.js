@@ -1472,7 +1472,8 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
                 ULTIMA_EMPRESA_SINCRONIZADA=$scope.sessiondate.codigo_empresa;
             window.setTimeout(function(){
                 ProcesadoHiden();
-                $route.reload();
+                $location.path('/ventas/pedidos_ingresados')
+                //$route.reload();
                 Mensajes('Sincronizado Con Exito','success','')
             },7000)
             

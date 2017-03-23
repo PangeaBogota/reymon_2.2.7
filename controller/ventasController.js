@@ -2452,6 +2452,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
             window.setTimeout(function(){
                 ProcesadoHiden();
                 //$route.reload();
+                $location.path('/ventas/pedidos_ingresados')
                 Mensajes('Sincronizado Con Exito','success','')
             },7000)
         },6000)
