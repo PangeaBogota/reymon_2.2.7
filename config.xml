@@ -52,7 +52,6 @@
     -->
 
     <!-- Define app icon for each platform. -->
-    <icon src="res/icon/ios/icon.png" />
     <icon src="res/icon/android/icon.png"   gap:platform="android"    gap:qualifier="ldpi" />
     <icon src="res/icon/android/icon.png"   gap:platform="android"    gap:qualifier="mdpi" />
     <icon src="res/icon/android/icon.png"   gap:platform="android"    gap:qualifier="hdpi" />
@@ -62,7 +61,6 @@
     <icon src="res/icon/ios/icon76.png"         gap:platform="ios"        width="76" height="76" />
     <icon src="res/icon/ios/icon120.png"         gap:platform="ios"        width="120" height="120" />
     <icon src="res/icon/ios/icon152.png"         gap:platform="ios"        width="152" height="152" />
-    <icon src="res/icon/ios/icon.png"         gap:platform="ios"        width="120" height="120" />
     <icon src="res/icon/webos/icon.png"          gap:platform="webos" />
     <icon src="res/icon/windows-phone/icon.png"  gap:platform="winphone" />
     <icon src="res/icon/windows-phone/icon.png" gap:platform="winphone"   gap:role="background" />
