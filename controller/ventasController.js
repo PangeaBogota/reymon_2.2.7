@@ -52,7 +52,6 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.Sucursal=[];
 		$scope.Tallas=[];
 		$scope.FechaEntrega;
-		
 	}
 	$scope.LimpiarInformacionItem=function()
 	{
@@ -65,7 +64,6 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		$scope.ColorMasivoMedia=[];
 		$scope.CantidadDocena=12;
 		$scope.MediaDocenaCount=6;
-
 	}
 	//CONSULTA DE TERCEROS
 	CRUD.select('select*from erp_terceros order by razonsocial',
@@ -1356,6 +1354,7 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 	$scope.CantidadTotalPedido=0;
 	$scope.ItemsPedidoAgregados=function()
 	{
+		$scope.CantidadTotalPedido=0;
 		$scope.itemsAgregadosPedido=[];
 		$scope.Detalles=[];
 		$scope.Colores=[];
@@ -1580,8 +1579,6 @@ app_angular.controller("pedidoController",['Conexion','$scope','$location','$htt
 		{
 			MODAL_SINCRONIZACION=0;
 		}
-
-		
 	}, 1000);
 	var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     var diasSemana = new Array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");		

@@ -3,9 +3,9 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        =  "com.pedidosonline.reymon"
-        versionCode = "39" 
-        version   = "2.2.9">
+        id        =  "com.phonegap.pedidosnline"
+        versionCode = "40" 
+        version   = "2.3.0">
 
     <name>Reymon</name>
 

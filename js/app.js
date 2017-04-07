@@ -320,12 +320,12 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
     
     function rotate() {
         
-        $elie.css({ WebkitTransform: 'rotate(' + degree + 'deg)'});  
-        $elie.css({ '-moz-transform': 'rotate(' + degree + 'deg)'});     
-        $('#sync i').css('color','#2fc296')                 
-        timer = setTimeout(function() {
-            ++degree; rotate();
-        },5);
+        //$elie.css({ WebkitTransform: 'rotate(' + degree + 'deg)'});  
+        //$elie.css({ '-moz-transform': 'rotate(' + degree + 'deg)'});     
+        $('#subirID i').css('color','#2fc296')                 
+        //timer = setTimeout(function() {
+        //    ++degree; rotate();
+        //},5);
     }
 
     $scope.rotacionOn=function(){
@@ -334,8 +334,8 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
             
     }
     $scope.rotacionOff=function(){
-        $('#sync i').css('color','#3e5c7d')                 
-        clearTimeout(timer);                   
+        $('#subirID i').css('color','#3e5c7d')                 
+        //clearTimeout(timer);                   
         
     }
     
@@ -353,6 +353,7 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
         }
         $scope.rotacionOff();
         $scope.rotacionOn();
+        debugger
         CRUD.selectAllinOne("select*from s_planos_pedidos where estado=0 order by ultimo_registro asc LIMIT 100",function(elem){
             $scope.procesoEnvio=true;
             if ($scope.status.connextionstate==false) {
@@ -381,16 +382,15 @@ app_angular.controller('sessionController',['bootbox','Conexion','$scope','$loca
                 $http({
                   method: 'GET',
                   async: true,
-                  timeout:9000,
+                  timeout:12000,
                   url: 'http://demos.pedidosonline.co/Mobile/sync?usuario='+$scope.usuario+'&entidad=PLANO&codigo_empresa=' + $scope.codigoempresa + '&datos=' + JSON.stringify(elem[i]),
                   
                     }).then(
                     function success(data) { 
                         CRUD.Updatedynamic("update s_planos_pedidos set estado=1 where rowid="+data.data.rowid+"");
-                        console.log('1')
                     }, 
                     function error(err) {
-                        $scope.errorAlerta.bandera=1;return 
+                        $scope.errorAlerta.bandera=1;return ;
                 });
             }
             setTimeout(function(){
